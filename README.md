@@ -9,6 +9,8 @@ Tech Stack:
  - Koa (for web engine)
  - Passport (for authentication)
  - Socket.io (for websocket)
+ - MongoDB (for Database)
+ - Redis (for ChatLog, session, ...etc)
  - etc
 ---
 
