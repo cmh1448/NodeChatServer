@@ -25,9 +25,5 @@ const logger = winston.createLogger({
   ],
 });
 
-<<<<<<< HEAD
 logger.info('Logger is initialized');
-
-=======
->>>>>>> bb19387 (로그 Config 추가)
 export default logger;

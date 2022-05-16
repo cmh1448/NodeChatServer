@@ -3,7 +3,7 @@ import logger from '../../log/logger';
 import passport from 'koa-passport';
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import User from '../../../domains/authentication/model/User';
-import securityUtil from '../securityUtil';
+import { getHashedPassword } from '../securityUtil';
 
 const verifyUser = async (email: string, password: string, done: any) => {
   logger.info('verifying user' + email);
@@ -14,7 +14,7 @@ const verifyUser = async (email: string, password: string, done: any) => {
   if (!user) {
     return done(null, false, { message: '존재하지 않는 사용자입니다.' });
   }
-  if (user.password === securityUtil.getHashedPassword(password, user.salt)) {
+  if (user.password === getHashedPassword(password, user.salt)) {
     return done(null, user);
   }
   return done(null, false, { message: '비밀번호가 일치하지 않습니다.' });

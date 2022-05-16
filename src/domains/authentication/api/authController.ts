@@ -2,12 +2,16 @@ import { RouterContext } from 'koa-router';
 import passport from 'passport';
 import logger from '../../../configuration/log/logger';
 import User from '../model/User';
-import securityUtil from '../../../configuration/security/securityUtil';
+import {
+  createHashedPassword,
+  createAccessToken,
+  createRefreshToken,
+} from '../../../configuration/security/securityUtil';
 import { Next } from 'koa';
 
 const register = async (ctx: RouterContext) => {
   const { email, name, password } = ctx.request.body;
-  const { salt, hash } = securityUtil.createHashedPassword(password);
+  const { salt, hash } = createHashedPassword(password);
 
   const user = new User({
     email: email,
@@ -50,8 +54,8 @@ const login = async (ctx: RouterContext, next: Next) => {
           })
           .then(() => {
             ctx.body = {
-              refreshToken: securityUtil.createRefreshToken(user),
-              accessToken: securityUtil.createAccessToken(user),
+              refreshToken: createRefreshToken(user),
+              accessToken: createAccessToken(user),
               user: user,
             };
           });
@@ -65,7 +69,7 @@ const login = async (ctx: RouterContext, next: Next) => {
 const refresh = async (ctx: RouterContext) => {
   ctx.body = {
     message: 'Refresh Completed',
-    accessToken: securityUtil.createAccessToken(ctx.state.user),
+    accessToken: createAccessToken(ctx.state.user),
   };
 };
 
@@ -82,5 +86,5 @@ export default {
   userList,
   login,
   authTest,
-  refresh
+  refresh,
 };

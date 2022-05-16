@@ -1,9 +1,9 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 
-const createSalt = () => crypto.randomBytes(64).toString('base64');
+export const createSalt = () => crypto.randomBytes(64).toString('base64');
 
-const createHashedPassword = (password: string) => {
+export const createHashedPassword = (password: string) => {
   const salt = createSalt();
   const hash = crypto
     .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
@@ -11,14 +11,14 @@ const createHashedPassword = (password: string) => {
   return { salt, hash };
 };
 
-const getHashedPassword = (password: string, salt: string) => {
+export const getHashedPassword = (password: string, salt: string) => {
   const hash = crypto
     .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
     .toString('base64');
   return hash;
 };
 
-const createAccessToken = (user: any) => {
+export const createAccessToken = (user: any) => {
   const tokenContent = user.toJSON();
   tokenContent.type = 'access';
 
@@ -29,7 +29,7 @@ const createAccessToken = (user: any) => {
   return token;
 };
 
-const createRefreshToken = (user: any) => {
+export const createRefreshToken = (user: any) => {
   const tokenContent = user.toJSON();
   tokenContent.type = 'refresh';
 
@@ -40,9 +40,3 @@ const createRefreshToken = (user: any) => {
   return token;
 };
 
-export default {
-  createHashedPassword,
-  createAccessToken,
-  createRefreshToken,
-  getHashedPassword,
-};
