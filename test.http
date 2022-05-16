@@ -3,9 +3,9 @@ POST https://vite.cmhvscode.dev/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "admin",
-  "password": "admin",
-  "name": "admin"
+  "email": "user",
+  "password": "user",
+  "name": "user"
 }
 
 ###
@@ -14,8 +14,8 @@ POST https://vite.cmhvscode.dev/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "admin",
-  "password": "admin"
+  "email": "user",
+  "password": "user"
 }
 ###
 @refreshToken = {{login.response.body.refreshToken}}

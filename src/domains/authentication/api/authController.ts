@@ -74,6 +74,7 @@ const refresh = async (ctx: RouterContext) => {
 };
 
 const authTest = async (ctx: RouterContext) => {
+  logger.debug('authTest');
   const user = ctx.state.user;
 
   ctx.body = {

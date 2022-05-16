@@ -1,6 +1,10 @@
 import Router from 'koa-router';
 import logger from '../configuration/log/logger';
-import authGuards from '../configuration/security/passport/authGuards';
+import {
+  jwtAccess,
+  jwtRefresh,
+  roleAcess,
+} from '../configuration/security/passport/authGuards';
 import authController from './authentication/api/authController';
 import { Role } from './authentication/model/User';
 
@@ -9,12 +13,12 @@ const authentication = new Router();
 
 authentication.post('/register', authController.register);
 authentication.post('/login', authController.login);
-authentication.get('/userList', authGuards.jwtAccess, authController.userList);
-authentication.get('/refresh', authGuards.jwtRefresh, authController.refresh);
+authentication.get('/userList', jwtAccess, authController.userList);
+authentication.get('/refresh', jwtRefresh, authController.refresh);
 
 authentication.get(
   '/authTest',
-  authGuards.roleAccess([Role.Admin]),
+  ...roleAcess([Role.Admin]),
   authController.authTest,
 );
 
