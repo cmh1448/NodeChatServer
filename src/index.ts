@@ -7,11 +7,14 @@ import bodyParser from 'koa-bodyparser';
 import securitySetup from './configuration/security/securitySetup';
 import apiRouter from './domains/routes';
 import mongooseConfig from './configuration/database/mongo/mongooseConfig';
+import { exeptionHandler } from './domains/exception/Exception';
 
 dotenv.config();
 
 const app = new koa();
 const router = new koaRouter();
+
+app.use(exeptionHandler);
 app.use(bodyParser());
 
 mongooseConfig();

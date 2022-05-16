@@ -1,5 +1,11 @@
 import mongoose from 'mongoose';
 
+export enum Role {
+  Developer = "Developer",
+  Admin = "Admin",
+  Normal = "Normal",
+}
+
 export interface UserDetail {
   email: string;
   name: string;
@@ -7,7 +13,7 @@ export interface UserDetail {
   salt: string;
   insertDate: Date;
   lastUpdateDate: Date;
-  role: String;
+  role: Role;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -26,8 +32,8 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     nullable: false,
-    enum: ['Developer', 'Admin', 'Normal'],
-    default: 'Normal',
+    enum: Role,
+    default: Role.Normal,
   },
 });
 

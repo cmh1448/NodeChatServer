@@ -6,7 +6,6 @@
   "scripts": {
     "start": "npm run build:live",
     "test": "NODE_ENV=test jest",
-    "tsc": "./node_modules/.bin/tsc-watch --onSuccess 'node ./dist/index.js'",
     "build:live": "nodemon --watch '*.ts' -e ts,js,json --exec './node_modules/.bin/ts-node ./src/index.ts'"
   },
   "_moduleAliases": {
