@@ -1,0 +1,39 @@
+# @name register
+POST https://vite.cmhvscode.dev/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin",
+  "password": "admin",
+  "name": "admin"
+}
+
+###
+# @name login
+POST https://vite.cmhvscode.dev/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin",
+  "password": "admin"
+}
+###
+@refreshToken = {{login.response.body.refreshToken}}
+
+###
+# @name refresh
+GET https://vite.cmhvscode.dev/api/auth/refresh
+Authorization: Bearer {{refreshToken}}
+
+###
+@accessToken = {{refresh.response.body.accessToken}}
+###
+# @name authTest
+GET https://vite.cmhvscode.dev/api/auth/authTest
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+# @name userList
+GET https://vite.cmhvscode.dev/api/auth/userList
+Content-Type: application/json
