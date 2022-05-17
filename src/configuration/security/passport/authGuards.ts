@@ -2,7 +2,7 @@ import { Next } from 'koa';
 import { IMiddleware, RouterContext } from 'koa-router';
 import passport from 'passport';
 import { Role, UserDetail } from '../../../domains/authentication/model/User';
-import { Exception } from '../../../domains/exception/Exception';
+import { Exeption } from '../../../domains/exception/Exception';
 import logger from '../../log/logger';
 
 const checkRole = (permitedRoles: Role[]) => {
@@ -12,12 +12,10 @@ const checkRole = (permitedRoles: Role[]) => {
       if (permitedRoles.includes(user.role)) {
         await next();
       } else {
-        ctx.throw(
-          Exception('You are not authorized to access this resource', 401),
-        );
+        throw new Exeption('Forbidden', 403);
       }
     } else {
-      ctx.throw(Exception('You are not logged in', 401));
+      throw new Exeption('Unauthorized', 401);
     }
   };
 };

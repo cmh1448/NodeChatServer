@@ -45,7 +45,7 @@ const login = async (ctx: RouterContext, next: Next) => {
           message: 'Authentication Error',
           user: user,
         };
-        logger.info(user.email + 'faced authentication error');
+        logger.info(user.email + ' faced authentication error');
       } else {
         ctx
           .login(user)

@@ -1,23 +1,22 @@
-import { Context, Next } from "koa";
+import { Context, Next } from 'koa';
 
-export interface Exception {
-  message: string;
+export interface ExeptionInterface extends Error {
   code: number;
 }
 
-export function Exception(message: string, code: number = 500) {
-  const ex: Exception = {
-    message: message,
-    code: code,
-  };
+export class Exeption extends Error implements ExeptionInterface {
+  constructor(msg: string, code: number) {
+    super(msg);
+    this.code = code;
+  }
 
-  return ex;
+  code: number;
 }
 
-export async function exeptionHandler (ctx: Context, next: Next) {
-  try{
+export async function exeptionHandler(ctx: Context, next: Next) {
+  try {
     await next();
-  }catch(ex: any) {
+  } catch (ex: any) {
     ctx.body = ex.message;
     ctx.status = ex.code ?? '500';
   }
