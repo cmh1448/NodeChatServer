@@ -25,7 +25,7 @@ redisClient.on('error', (err) => {
 export default {
   client: redisClient,
   config: (app: import('koa')<DefaultState, DefaultContext>) => {
-    app.keys = ['some secret hurr'];
+    app.keys = [process.env.REDIS_SECRET ?? ''];
     app.use(
       session(
         {
