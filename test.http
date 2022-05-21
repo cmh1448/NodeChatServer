@@ -26,7 +26,7 @@ GET https://vite.cmhvscode.dev/api/auth/refresh
 Authorization: Bearer {{refreshToken}}
 
 ###
-@accessToken = {{refresh.response.body.accessToken}}
+@accessToken = {{login.response.body.accessToken}}
 ###
 # @name authTest
 GET https://vite.cmhvscode.dev/api/auth/authTest
@@ -37,3 +37,10 @@ Authorization: Bearer {{accessToken}}
 # @name userList
 GET https://vite.cmhvscode.dev/api/auth/userList
 Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+# @name userInfo
+GET https://vite.cmhvscode.dev/api/auth/userInfo
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}

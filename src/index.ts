@@ -8,6 +8,7 @@ import securitySetup from './configuration/security/securitySetup';
 import apiRouter from './domains/routes';
 import mongooseConfig from './configuration/database/mongo/mongooseConfig';
 import { exeptionHandler } from './domains/exception/Exception';
+import redis from './configuration/database/redis/redis';
 
 //Environment Setup
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(bodyParser());
 
 //Database Setup
 mongooseConfig();
+redis.config(app);
 
 //Security Setup
 securitySetup(app);

@@ -1,12 +1,15 @@
-import mongoose from 'mongoose';
+import { RouterContext } from 'koa-router';
+import mongoose, { ObjectId } from 'mongoose';
+import { Context } from 'vm';
+import { Exeption } from '../../exception/Exception';
 
 export enum Role {
-  Developer = "Developer",
-  Admin = "Admin",
-  Normal = "Normal",
+  Developer = 'Developer',
+  Admin = 'Admin',
+  Normal = 'Normal',
 }
 
-export interface UserDetail {
+export interface UserDetail extends mongoose.Document {
   email: string;
   name: string;
   password: string;
@@ -44,5 +47,16 @@ UserSchema.methods.toJSON = function () {
   return obj;
 };
 
-const User = mongoose.model<UserDetail>('User', UserSchema);
-export default User;
+export const User = mongoose.model<UserDetail>('User', UserSchema);
+
+export async function getUserFromContext(ctx: RouterContext | Context) {
+  if (ctx.state.user === undefined) throw new Exeption('Unauthorized', 401);
+
+  const user = await User.findOne({
+    ...ctx.state.user,
+  });
+
+  if (!user) throw new Exeption('User Not Found In Repository', 404);
+
+  return user;
+}

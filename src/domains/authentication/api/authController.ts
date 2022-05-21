@@ -1,13 +1,14 @@
-import { RouterContext } from 'koa-router';
+import Router, { RouterContext } from 'koa-router';
 import passport from 'passport';
 import logger from '../../../configuration/log/logger';
-import User from '../model/User';
+import { Role, User, UserDetail } from '../model/User';
 import {
   createHashedPassword,
   createAccessToken,
   createRefreshToken,
 } from '../../../configuration/security/securityUtil';
 import { Next } from 'koa';
+import { jwtAccess, jwtRefresh, roleAcess } from '../../../configuration/security/passport/authGuards';
 
 const register = async (ctx: RouterContext) => {
   const { email, name, password } = ctx.request.body;
@@ -24,7 +25,7 @@ const register = async (ctx: RouterContext) => {
   const query = await User.findById(user._id).exec();
   ctx.body = {
     message: 'User created',
-    user: query,
+    user: query?.toJSON(),
   };
 };
 
@@ -73,6 +74,12 @@ const refresh = async (ctx: RouterContext) => {
   };
 };
 
+const userinfo = async (ctx: RouterContext) => {
+  const user: UserDetail = ctx.state.user;
+  const userModel = new User(user);
+  ctx.body = userModel.toJSON();
+};
+
 const authTest = async (ctx: RouterContext) => {
   logger.debug('authTest');
   const user = ctx.state.user;
@@ -82,10 +89,12 @@ const authTest = async (ctx: RouterContext) => {
   };
 };
 
-export default {
-  register,
-  userList,
-  login,
-  authTest,
-  refresh,
-};
+const domainRouter = new Router();
+domainRouter.post('/register', register);
+domainRouter.post('/login', login);
+domainRouter.get('/userList',...roleAcess([Role.Developer, Role.Admin]),userList);
+domainRouter.get('/refresh', jwtRefresh, refresh);
+domainRouter.get('/authTest', jwtAccess, authTest);
+domainRouter.get('/userInfo', jwtAccess, userinfo);
+
+export default domainRouter;

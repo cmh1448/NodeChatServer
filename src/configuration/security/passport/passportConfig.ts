@@ -2,7 +2,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import logger from '../../log/logger';
 import passport from 'koa-passport';
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
-import User from '../../../domains/authentication/model/User';
+import { User } from '../../../domains/authentication/model/User';
 import { getHashedPassword } from '../securityUtil';
 
 const verifyUser = async (email: string, password: string, done: any) => {
