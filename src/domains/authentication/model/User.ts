@@ -8,7 +8,12 @@ export enum Role {
   Admin = 'Admin',
   Normal = 'Normal',
 }
-
+export interface UserSummary {
+  _id: string;
+  name: string;
+  email: string;
+  role: Role;
+}
 export interface UserDetail extends mongoose.Document {
   email: string;
   name: string;

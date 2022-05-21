@@ -2,6 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 import { UserDetail } from '../../authentication/model/User';
 
 export interface RoomDetail {
+  _id: string;
   users: UserDetail[];
   admin: UserDetail;
   name: string;

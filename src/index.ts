@@ -9,6 +9,7 @@ import apiRouter from './domains/routes';
 import mongooseConfig from './configuration/database/mongo/mongooseConfig';
 import { exeptionHandler } from './domains/exception/Exception';
 import redis from './configuration/database/redis/redis';
+import { WebsocketListener } from './domains/localchat/server/WebsocketListener';
 
 //Environment Setup
 dotenv.config();
@@ -34,3 +35,4 @@ app.use(router.routes()).use(router.allowedMethods());
 app.listen(3000, () => {
   logger.info('Server is running on port 3000');
 });
+const websocketListener = new WebsocketListener(app);
