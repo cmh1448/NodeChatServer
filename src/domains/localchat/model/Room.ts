@@ -18,6 +18,7 @@ const RoomSchema = new mongoose.Schema({
   userlimit: {
     type: Number,
     min: 2,
+    default: 20,
   },
 });
 

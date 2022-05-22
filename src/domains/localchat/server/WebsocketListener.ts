@@ -11,7 +11,7 @@ export class WebsocketListener {
 
   public constructor(app: any) {
     this.server = new Server(app);
-
+    logger.info('WebsocketListener is listening');
     this.server.on('connection', (socket: any) => {
       const client = new WebsocketClient(socket);
       this.clients.push(client);
