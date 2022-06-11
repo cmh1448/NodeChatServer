@@ -1,4 +1,5 @@
 import { Context, Next } from 'koa';
+import logger from '../../configuration/log/logger';
 
 export interface ExeptionInterface extends Error {
   code: number;
@@ -18,6 +19,7 @@ export async function exeptionHandler(ctx: Context, next: Next) {
     await next();
   } catch (ex: any) {
     ctx.body = ex.message;
-    ctx.status = ex.code ?? '500';
+    ctx.status = ex.code ?? 500;
+    logger.error(ex.message);
   }
 }

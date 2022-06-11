@@ -61,7 +61,7 @@ const login = async (ctx: RouterContext, next: Next) => {
             };
           });
 
-        logger.info(user.email + 'is logged in');
+        logger.info(user.email + ' is logged in');
       }
     },
   )(ctx, next);

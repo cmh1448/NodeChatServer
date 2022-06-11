@@ -32,7 +32,7 @@ router.use('/api', apiRouter.routes());
 app.use(router.routes()).use(router.allowedMethods());
 
 //Server Setup
-app.listen(3000, () => {
+app.listen(5000, () => {
   logger.info('Server is running on port 3000');
 });
 const websocketListener = new WebsocketListener(app);
